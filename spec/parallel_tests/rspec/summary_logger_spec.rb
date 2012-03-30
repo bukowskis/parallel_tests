@@ -20,7 +20,9 @@ describe ParallelTests::RSpec::SummaryLogger do
     logger.dump_failures
     output.output.should == []
     logger.dump_summary(1,2,3,4)
-    output.output.should == ["\nFinished in 1 seconds\n", "\e[31m2 examples, 3 failures, 4 pending\e[0m"]
+    output.output.size.should == 2
+    output.output.first.should =~ /Finished in 1 seconds/
+    output.output.last.should =~ /2 examples, 3 failures, 4 pending/
   end
 
   it "does not print anything for pending examples" do
@@ -28,6 +30,8 @@ describe ParallelTests::RSpec::SummaryLogger do
     logger.dump_failures
     output.output.should == []
     logger.dump_summary(1,2,3,4)
-    output.output.should == ["\nFinished in 1 seconds\n", "\e[31m2 examples, 3 failures, 4 pending\e[0m"]
+    output.output.size.should == 2
+    output.output.first.should =~ /Finished in 1 seconds/
+    output.output.last.should =~ /2 examples, 3 failures, 4 pending/
   end
 end
