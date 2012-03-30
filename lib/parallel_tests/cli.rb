@@ -49,6 +49,11 @@ module ParallelTest
       results = runner.find_results(test_results.map { |result| result[:stdout] }*"")
       puts ""
       puts runner.summarize_results(results)
+      puts ""
+      puts "Slowest tests:"
+      runner.slowest_tests.each do |test, time|
+        printf "%-40s: %.1f seconds\n", test, time
+      end
     end
 
     def self.report_number_of_tests(runner, groups)

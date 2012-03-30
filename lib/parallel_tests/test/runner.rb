@@ -106,16 +106,27 @@ module ParallelTests
         # use recorded test runtime if we got enough data
         if lines.size * 1.5 > tests.size
           puts "Using recorded test runtime"
-          times = Hash.new(1)
-          lines.each do |line|
-            test, time = line.split(":")
-            next unless test and time
-            times[File.expand_path(test)] = time.to_f
-          end
+          times = test_times(lines)
           tests.sort.map{|test| [test, times[test]] }
         else # use file sizes
           tests.sort.map{|test| [test, File.stat(test).size] }
         end
+      end
+
+      def self.test_times(lines)
+        times = Hash.new(1)
+        lines.each do |line|
+          test, time = line.split(":")
+          next unless test and time
+          times[File.expand_path(test)] = time.to_f
+        end
+        times
+      end
+
+      def self.slowest_tests
+        lines = File.read(runtime_log).split("\n") rescue []
+        times = test_times(lines)
+        times.sort {|a,b| b[1] <=> a[1] }
       end
 
       def self.find_tests(tests, options={})
