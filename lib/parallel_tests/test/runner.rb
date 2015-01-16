@@ -44,6 +44,9 @@ module ParallelTests
         f = open("|#{cmd}", 'r')
         output = fetch_output(f, options)
         f.close
+        puts
+        puts "Executed #{cmd.inspect} with exit status #{$?.exitstatus.inspect}"
+        puts
         {:stdout => output, :exit_status => $?.exitstatus}
       end
 
