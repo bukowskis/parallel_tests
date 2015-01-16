@@ -34,7 +34,38 @@ module ParallelTest
         report_results runner, test_results
       end
 
-      abort "#{lib.capitalize}s Failed" if any_test_failed?(test_results)
+      if any_test_failed?(test_results)
+        say_no
+        abort
+      else
+        say_yes
+      end
+    end
+
+    def self.say_yes
+      puts ''
+      puts %q{    $$\     $$\ $$$$$$$$\  $$$$$$\  $$\ }
+      puts %q{    \$$\   $$  |$$  _____|$$  __$$\ $$ |}
+      puts %q{     \$$\ $$  / $$ |      $$ /  \__|$$ |}
+      puts %q{      \$$$$  /  $$$$$\    \$$$$$$\  $$ |}
+      puts %q{       \$$  /   $$  __|    \____$$\ \__|}
+      puts %q{        $$ |    $$ |      $$\   $$ |    }
+      puts %q{        $$ |    $$$$$$$$\ \$$$$$$  |$$\ }
+      puts %q{        \__|    \________| \______/ \__|}
+      puts ''
+    end
+
+    def self.say_no
+      puts ''
+      puts %q{    $$\   $$\  $$$$$$\  $$\ }
+      puts %q{    $$$\  $$ |$$  __$$\ $$ |}
+      puts %q{    $$$$\ $$ |$$ /  $$ |$$ |}
+      puts %q{    $$ $$\$$ |$$ |  $$ |$$ |}
+      puts %q{    $$ \$$$$ |$$ |  $$ |\__|}
+      puts %q{    $$ |\$$$ |$$ |  $$ |    }
+      puts %q{    $$ | \$$ | $$$$$$  |$$\ }
+      puts %q{    \__|  \__| \______/ \__|}
+      puts ''
     end
 
     def self.run_tests(runner, group, process_number, options)
